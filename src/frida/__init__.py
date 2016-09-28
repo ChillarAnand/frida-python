@@ -2,6 +2,8 @@
 from __future__ import unicode_literals, print_function
 
 import threading
+
+from . import core
 try:
     import _frida
 except Exception as ex:
@@ -101,11 +103,5 @@ def shutdown():
     get_device_manager()._impl.close()
 
 
-global _device_manager
-_device_manager = None
 def get_device_manager():
-    global _device_manager
-    if _device_manager is None:
-        from . import core
-        _device_manager = core.DeviceManager(_frida.DeviceManager())
-    return _device_manager
+    return core.DeviceManager(_frida.DeviceManager())
